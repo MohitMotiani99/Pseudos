@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int t,k;
+    cin>>t;
+    while(t--){
+        int sum=0;
+        cin>>k;
+        int dp[k]={0};
+        dp[0]=0;
+        dp[1]=1;
+
+        sum+=1;
+        if(sum>=k)
+        cout<<"1"<<endl;
+        else{
+        for(int i=2;i<=k;i++){
+            int cnt=0;
+            for(int j=1;j<=sqrt(i);j++){
+                if(i%j==0)
+                {
+                    if(i/j==j)
+                    cnt++;
+                    else
+                    cnt+=2;
+                }
+            }
+            sum+=cnt;
+            
+            if(sum>=k)
+            {cout<<i<<endl;break;}
+          }
+        }
+    }
+}
