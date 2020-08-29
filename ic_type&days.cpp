@@ -6,22 +6,23 @@ bool comp(pair<int,int> a,pair<int,int> b){
    }
 vector<string> solve (vector<vector<int> > arr, vector<vector<int> > queries) {
    // Your Code Here
-      cout<<"H1"<<endl;
+      //cout<<"H1"<<endl;
 
    int max[N];
    int min[N];
 
    vector<pair<int,int>> v;
-   /*
+   
    for(int i=0;i<N;i++){
-         cout<<i<<endl;
-      v.push_back(make_pair(arr[i][0],arr[i][1]));
+      //cout<<i<<endl;
+      //cout<<arr[0][i]<<" "<<arr[1][i]<<endl;
+      v.push_back(make_pair(arr[0][i],arr[1][i]));
    }
-   */
-      cout<<"H1"<<endl;
+   
+      //cout<<"H1"<<endl;
 
    sort(v.begin(),v.end(),comp);
-   //   cout<<"H1"<<endl;
+     //cout<<"H1sort"<<endl;
 
    //cout<<"H1"<<endl;
 
@@ -33,21 +34,25 @@ vector<string> solve (vector<vector<int> > arr, vector<vector<int> > queries) {
       else
       min[i]=v[i].first/M + 1;
    }
-   //cout<<"H1"<<endl;
+   //cout<<"H1min"<<endl;
 
    for(int i=N-2;i>=0;i--){
-      min[i]+=min[i-1];
+      min[i]+=min[i+1];
    }
       //cout<<"H1"<<endl;
 
    for(int i=N-2;i>=0;i--){
-      max[i]+=max[i-1];
+      max[i]+=max[i+1];
    }
+   
+   /*for(int i=0;i<N;i++){
+       cout<<min[i]<<" "<<max[i]<<endl;
+   }*/
    //cout<<"H1"<<endl;
    vector<string> ans;
    for(int i=0;i<Q;i++){
       //cout<<"H1"<<endl;
-      int pr=arr[queries[i][0]-1][1];  
+      int pr=arr[1][queries[i][0]-1];  
       int j;
       for(j=N-1;j>=0;){
          //cout<<"H1"<<endl;
@@ -56,8 +61,15 @@ vector<string> solve (vector<vector<int> > arr, vector<vector<int> > queries) {
          else
          break;
       }
-      int maxd=max[j+1]+arr[queries[i][0]-1][0];
-      int mind=min[j+1];
+      int mind,maxd;
+      if(j!=N-1){
+       maxd=max[j+1]+arr[0][queries[i][0]-1];
+       mind=min[j+1];
+      }
+      else{
+          maxd=max[j];
+            mind=min[j];
+      }
       if(queries[i][1]>=mind && queries[i][1]<=maxd)
       ans.push_back("Yes");
       else
@@ -77,11 +89,11 @@ int main(){
     vector<vector<int> > queries(Q,vector<int>(2));
     for(int i=0;i<Q;i++){
         for(int j=0;j<2;j++){
-            cin>>arr[i][j];
+            cin>>queries[i][j];
         }
     }
+    //for(int i=0;i<)
     vector<string> ans=solve(arr,queries);
     for(int i=0;i<Q;i++)
-    cout<<ans[i]<<" ";
-    cout<<endl;
+    cout<<ans[i]<<endl;
 }
